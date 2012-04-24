@@ -1,6 +1,6 @@
 package Object::KeyValueCoding;
 
-our $VERSION = "0.2.1";
+our $VERSION = "0.3";
 
 use strict;
 use Carp         qw( croak   );
@@ -626,7 +626,7 @@ See more complex examples below.
 
 =head1 VERSION
 
-    0.2.1
+    0.3
 
 
 =head1 FEATURES
