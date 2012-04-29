@@ -1,4 +1,4 @@
-package TestKeyValueCodingOnMooseObject;
+package TestKeyValueCodingOnMooObject;
 
 use strict;
 use warnings;
@@ -10,19 +10,20 @@ use base qw(
 
 use Test::More;
 
-sub obj { return $_[0]->{obj} ||= _MooseTestThing->new() }
+sub obj { return $_[0]->{obj} ||= _MooTestThing->new() }
 
-package _MooseTestThing;
+
+package _MooTestThing;
 
 use strict;
 use warnings;
 
-use Moose;
+use Moo;
 use Object::KeyValueCoding additions => 1;
 
-has bacon           => ( is => "rw", isa => "Str", );
-has shakespeare     => ( is => "rw", isa => "Str", );
-has foo             => ( is => "rw", isa => "_MooseTestThing" );
+has bacon           => ( is => "rw", );
+has shakespeare     => ( is => "rw", );
+has foo             => ( is => "rw", );
 
 sub marlowe { return "christopher" }
 sub chaucer {

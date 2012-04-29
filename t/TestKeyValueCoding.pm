@@ -9,26 +9,27 @@ use base qw(
 use Test::More;
 use Test::Exception;
 use Data::Dumper;
-use Object::KeyValueCoding cache_keys => 1;
-
-my $nameMap = {
-    'LIKE_THIS'        => [qw(like this)],
-    'like_this'        => [qw(like this)],
-    'likeThis'         => [qw(like this)],
-    'LikeThis'         => [qw(like this)],
-    '_LIKE_THIS'       => [qw(like this)],
-    '__likeThis'       => [qw(like this)],
-    'LIKEThis'         => [qw(LIKE this)],
-    'LikeThisLikeThat' => [qw(like this like that)],
-    'LIKEThisLIKEThat' => [qw(LIKE this LIKE that)],
-    '_a'               => [qw(a)],
-};
+use Object::KeyValueCoding cache_keys => 1, implementation => "Complex";
 
 sub test_names : Test(42) {
     my ($self) = @_;
-    foreach my $key (keys %$nameMap) {
+
+    my $NAME_MAP = {
+        'LIKE_THIS'        => [qw(like this)],
+        'like_this'        => [qw(like this)],
+        'likeThis'         => [qw(like this)],
+        'LikeThis'         => [qw(like this)],
+        '_LIKE_THIS'       => [qw(like this)],
+        '__likeThis'       => [qw(like this)],
+        'LIKEThis'         => [qw(LIKE this)],
+        'LikeThisLikeThat' => [qw(like this like that)],
+        'LIKEThisLIKEThat' => [qw(LIKE this LIKE that)],
+        '_a'               => [qw(a)],
+    };
+
+    foreach my $key (keys %$NAME_MAP) {
         my $value = Object::KeyValueCoding::Key->new( $key );
-        is_deeply($nameMap->{$key}, $value->{parts}, "normalised $key");
+        is_deeply($NAME_MAP->{$key}, $value->{parts}, "normalised $key");
     }
 
     my $name = Object::KeyValueCoding::Key->new( "LikeThisLikeThat" );

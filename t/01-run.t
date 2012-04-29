@@ -1,12 +1,28 @@
 #!/usr/bin/env perl
 
 use lib 't';
+use lib 'lib';
+use lib '../lib';
+
 use TestKeyValueCoding;
-use TestKeyValueCodingOnObject;
+use TestKeyValueCodingSimple;
+use TestKeyValueCodingOnPlainObject;
+use TestKeyValueCodingUniversal;
+use TestKeyValueCodingInheritance;
+
 BEGIN {
-    my $hasMoose = eval { require Moose };
+    eval { require Moose };
     unless ($@) {
         eval "use TestKeyValueCodingOnMooseObject";
+        eval "use TestKeyValueCodingWithMooseRole";
+    }
+    eval { require Moo };
+    unless ($@) {
+        eval "use TestKeyValueCodingOnMooObject";
+    }
+    eval { require Mouse };
+    unless ($@) {
+        eval "use TestKeyValueCodingOnMouseObject";
     }
 }
 

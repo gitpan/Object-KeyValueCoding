@@ -1,28 +1,32 @@
-package TestKeyValueCodingOnMooseObject;
+package TestKeyValueCodingOnPlainObject;
 
 use strict;
 use warnings;
 
-use strict;
 use base qw(
     TestKeyValueCodingOnObject
 );
 
 use Test::More;
 
-sub obj { return $_[0]->{obj} ||= _MooseTestThing->new() }
+sub obj { return $_[0]->{obj} ||= _ObjectTestThing->new() }
 
-package _MooseTestThing;
+package _ObjectTestThing;
 
 use strict;
 use warnings;
 
-use Moose;
 use Object::KeyValueCoding additions => 1;
 
-has bacon           => ( is => "rw", isa => "Str", );
-has shakespeare     => ( is => "rw", isa => "Str", );
-has foo             => ( is => "rw", isa => "_MooseTestThing" );
+sub new {
+    my ( $class ) = @_;
+    return bless {
+        bacon => undef,
+    }, $class;
+}
+
+sub shakespeare    { return $_[0]->{shakespeare}  }
+sub setShakespeare { $_[0]->{shakespeare} = $_[1] }
 
 sub marlowe { return "christopher" }
 sub chaucer {
@@ -30,6 +34,10 @@ sub chaucer {
     if ( $value eq "geoffrey" ) { return "canterbury" }
     return "tales";
 }
+
+sub bacon    { return $_[0]->{bacon} }
+sub setBacon { $_[0]->{bacon} = $_[1] }
+
 sub taylorColeridge { return [ "samuel", "xanadu", "kublai khan" ] }
 
 sub _s {
@@ -43,5 +51,9 @@ sub donne {
         "bruce" => 'brucey'
     };
 }
+
+# try a different style of accessor
+sub foo     { return $_[0]->{_foo}  }
+sub set_foo { $_[0]->{_foo} = $_[1] }
 
 1;
